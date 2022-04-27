@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  php-httpd:
+    build:
+      context: ./php-httpd
+    container_name: dev-apache
+    ports:
+      - 8080:80
+    volumes:
+      - ./html:/var/www/html
+
+  mariadb:
+    image: mariadb:10.8.2
+    container_name: dev-mariadb
+    restart: always
+    environment:
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=S3cret
+      - MYSQL_DATABASE=testdb
+      - MYSQL_ROOT_PASSWORD=S3cret
+    volumes:
+      - mariadb-data:/var/lib/mysql
+    ports:
+      - 3306:3306
+
+  phpmyadmin:
+    image: phpmyadmin:5.1.3
+    container_name: dev-phpmyadmin
+    links:
+      - mariadb:db
+    ports:
+      - 8081:80 
+
+volumes:
+  mariadb-data:
