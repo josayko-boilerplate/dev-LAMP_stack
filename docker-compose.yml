@@ -13,7 +13,6 @@ services:
   mariadb:
     image: mariadb:10.8.2
     container_name: dev-mariadb
-    restart: always
     environment:
       - MYSQL_USER=admin
       - MYSQL_PASSWORD=S3cret
@@ -30,7 +29,7 @@ services:
     links:
       - mariadb:db
     ports:
-      - 8081:80 
+      - 8081:80
 
 volumes:
   mariadb-data:
